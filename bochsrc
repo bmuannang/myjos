@@ -1,0 +1,35 @@
+romimage: file=/usr/local/share/bochs/BIOS-bochs-latest
+
+megs: 512
+
+vgaromimage: file=/usr/local/share/bochs/VGABIOS-elpin-2.40
+
+
+#cpu: count=2, ips=6000000, reset_on_triple_fault=1, ignore_bad_msrs=1
+cpu: count=1, ips=6000000, reset_on_triple_fault=1, ignore_bad_msrs=1
+
+ata0-master: type=disk, path="xv6.img"
+#ata0-slave: type=disk, path="fs.img"
+
+
+
+boot: c
+
+log: bochsout.txt
+
+parport1: enable=0
+
+mouse: enabled=0
+
+private_colormap: enabled=0
+
+fullscreen: enabled=0
+screenmode: name="sample"
+
+
+
+
+
+
+
+

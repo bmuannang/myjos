@@ -35,4 +35,4 @@ CPUS := 2
 QEMUOPTS = xv6.img -smp $(CPUS) -m 512
 
 qemu: xv6.img
-	$(QEMU) -serial mon:stdio $(QEMUOPTS)
+	$(QEMU) -serial stdio $(QEMUOPTS)
