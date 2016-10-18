@@ -1,4 +1,8 @@
-# If the makefile can't find QEMU, specify its path here
+OBJS = \
+	main.o\
+	io.o\
+	string.o
+	
 QEMU = qemu-system-i386
 
 CC = gcc
@@ -24,7 +28,7 @@ bootblock: bootasm.S bootmain.c
 	./makeboot.sh bootblock #制作启动盘
 
 kernel: $(OBJS) entry.o  kernel.ld
-	$(LD) $(LDFLAGS) -T kernel.ld -o kernel entry.o 
+	$(LD) $(LDFLAGS) -T kernel.ld -o kernel entry.o $(OBJS)
 	$(OBJDUMP) -S kernel > kernel.asm
 	$(OBJDUMP) -t kernel | sed '1,/SYMBOL TABLE/d; s/ .* / /; /^$$/d' > kernel.sym
 
@@ -36,3 +40,7 @@ QEMUOPTS = xv6.img -smp $(CPUS) -m 512
 
 qemu: xv6.img
 	$(QEMU) -serial stdio $(QEMUOPTS)
+	
+qemu-gdb: xv6.img .gdbinit
+	@echo "*** Now run 'gdb'." 1>&2
+	$(QEMU) -serial stdio $(QEMUOPTS) -S -gdb tcp::26000
