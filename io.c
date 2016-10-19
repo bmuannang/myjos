@@ -25,9 +25,9 @@ void cgaputc(int c)
   if(c == '\n')
     pos += 80 - pos%80;
   else{
-	  *((ushort*)(0xb8000+pos*2)) = (c&0xff) | 0x0700;
-	  pos+=1;
-//    crt[pos++] = (c&0xff) | 0x0700;  // 黑底白字
+//	  *((ushort*)(0xb8000+pos*2)) = (c&0xff) | 0x0700;
+//	  pos+=1;
+    crt[pos++] = (c&0xff) | 0x0700;  // 黑底白字
   }
 
   if((pos/80) >= 24){  // Scroll up.

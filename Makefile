@@ -9,7 +9,7 @@ CC = gcc
 LD = ld
 OBJCOPY = objcopy
 OBJDUMP = objdump
-CFLAGS = -static -Wall -ggdb -m32 -Werror
+CFLAGS = -static -Wall -ggdb -m32 -Werror -O2
 ASFLAGS = -m32 -gdwarf-2
 LDFLAGS = -m elf_i386
 

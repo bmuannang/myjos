@@ -6,6 +6,12 @@
 
 void readseg(uchar*, uint, uint);
 
+//	获取elf文件段信息 readelf -l kernel,输出如下, elf文件头4K，代码段从4K(0x001000)开始
+//	Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+//	LOAD           0x001000 0x80100000 0x00100000 0x003fc 0x003fc R E 0x1000  代码段
+//	LOAD           0x002000 0x80101000 0x00101000 0x01004 0x02010 RW  0x1000  数据段
+//	GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RWE 0x10
+
 void
 bootmain(void)
 {
@@ -26,6 +32,7 @@ bootmain(void)
   for(; ph < eph; ph++){
     pa = (uchar*)ph->paddr;
     readseg(pa, ph->filesz, ph->off);
+    //补0，如bss段，在文件中不占空间，在内存中占空间，例如filesz=0x1004 < memsz=0x2010
     if(ph->memsz > ph->filesz)
       stosb(pa + ph->filesz, 0, ph->memsz - ph->filesz);
   }
