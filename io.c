@@ -62,9 +62,8 @@ void clearScreen(){
 
 void showWelcome(){
 	char * welcome = "HELLO, WELCOME! -- BY TINYOS.";
-	char * welcome2 = (char *)V2P(welcome);
-	int i, len = strlen(welcome2);
+	int i, len = strlen(welcome);
 	for(i=0;i<len;i++){
-		cgaputc(welcome2[i]);
+		cgaputc(welcome[i]);
 	}
 }
