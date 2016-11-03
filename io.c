@@ -6,7 +6,7 @@
  */
 #include "types.h"
 #include "defs.h"
-#include "memlayout.h"
+#include "mm.h"
 #include "x86.h"
 
 #define CRTPORT 0x3d4
@@ -61,9 +61,17 @@ void clearScreen(){
 }
 
 void showWelcome(){
-	char * welcome = "HELLO, WELCOME! -- BY TINYOS.";
+	char * welcome = "HELLO, WELCOME! -- BY MYJOS.\n";
 	int i, len = strlen(welcome);
 	for(i=0;i<len;i++){
 		cgaputc(welcome[i]);
 	}
+}
+
+void panic(){
+	char * panic = "PANIC!\n";
+	int i, len = strlen(panic);
+		for(i=0;i<len;i++){
+			cgaputc(panic[i]);
+		}
 }

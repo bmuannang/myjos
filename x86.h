@@ -39,3 +39,15 @@ stosl(void *addr, int data, int cnt)
                "0" (addr), "1" (cnt), "a" (data) :
                "memory", "cc");
 }
+
+static inline void
+cli(void)
+{
+  asm volatile("cli");
+}
+
+static inline void
+sti(void)
+{
+  asm volatile("sti");
+}

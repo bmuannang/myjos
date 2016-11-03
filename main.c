@@ -1,12 +1,14 @@
 #include "types.h"
 #include "defs.h"
-#include "mmu.h"
-#include "memlayout.h"
+#include "mm.h"
 
-void showWelcome();
+extern char end[];
 
 int main(void){
 	showWelcome();
+	kinit(end, P2V(4*1024*1024), 1);
+	showWelcome();
+	panic();
 	for(;;){
 
 	}

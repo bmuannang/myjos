@@ -1,6 +1,5 @@
 #include "asm.h"
-#include "memlayout.h"
-#include "mmu.h"
+#include "mm.h"
 
 .code16                      
 .globl start

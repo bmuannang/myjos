@@ -1,5 +1,4 @@
-#include "mmu.h"
-#include "memlayout.h"
+#include "mm.h"
 
 .globl _start
 _start = V2P_WO(entry)

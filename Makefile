@@ -1,7 +1,8 @@
 OBJS = \
 	main.o\
 	io.o\
-	string.o
+	string.o\
+	mm.o
 	
 QEMU = qemu-system-i386
 
