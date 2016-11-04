@@ -51,3 +51,9 @@ sti(void)
 {
   asm volatile("sti");
 }
+
+static inline void
+lcr3(uint val)
+{
+  asm volatile("movl %0,%%cr3" : : "r" (val));
+}

@@ -19,6 +19,10 @@ static inline void *p2v(uint a) { return (void *) ((a) + KERNBASE); }
 #define CR0_WP          0x00010000      // 写保护
 #define CR0_PG          0x80000000      // 分页
 
+//CR4.PSE=1 PDE.PS=1  4M分页
+//CR4.PSE=1 PDE.PS=0  4K分页
+//CR4.PSE=0 PDE.PS=1  4K分页
+//CR4.PSE=0 PDE.PS=0  4K分页
 #define CR4_PSE         0x00000010      //扩展分页标志，开启:1页大小=4M
 
 #define SEG_KCODE 1  // 内核代码段
@@ -32,6 +36,7 @@ static inline void *p2v(uint a) { return (void *) ((a) + KERNBASE); }
 #define PGSIZE          4096    // 页大小
 
 #define PDXSHIFT        22      // 一个页目录项管4M, 2^22=4M
+#define PTXSHIFT        12      // 一个页表项管4K, 2^12=4K
 
 #define PTE_P           0x001   // 存在
 #define PTE_W           0x002   // 可写
@@ -39,7 +44,19 @@ static inline void *p2v(uint a) { return (void *) ((a) + KERNBASE); }
 #define PTE_PS          0x080   // 页目录表项中, 开启:1页大小=4M
 
 #define PGSIZE          4096    //一页=4096B
-#define PHYSTOP         0xE000000  //物理内存上限=224M
 
 #define PGROUNDUP(sz)  (((sz)+PGSIZE-1) & ~(PGSIZE-1))
 #define PGROUNDDOWN(a) (((a)) & ~(PGSIZE-1))
+
+#define EXTMEM   0x100000             // 1M
+#define PHYSTOP  0xE000000  		  //物理内存上限=224M
+#define DEVSPACE 0xFE000000 		  //设备空间=4G-32M
+#define KERNLINK (KERNBASE+EXTMEM)
+
+// 页目录项索引 前10位
+#define PDX(va)         (((uint)(va) >> PDXSHIFT) & 0x3FF)
+// 页表项索引 中间10位
+#define PTX(va)         (((uint)(va) >> PTXSHIFT) & 0x3FF)
+
+#define PTE_ADDR(pte)   ((uint)(pte) & ~0xFFF)  //页表或页的基址 4K对齐
+#define PTE_FLAGS(pte)  ((uint)(pte) &  0xFFF)  //页目录项或页表项段属性
